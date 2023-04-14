@@ -423,7 +423,7 @@ class ILI9488_t3 : public Print
       int16_t *x1, int16_t *y1, uint16_t *w, uint16_t *h);
     void getTextBounds(const String &str, int16_t x, int16_t y,
       int16_t *x1, int16_t *y1, uint16_t *w, uint16_t *h);
-	int16_t strPixelLen(const char * str, uint16_t cb);
+	int16_t strPixelLen(const char * str, uint16_t cb=0xffff);
 	
 	uint32_t fetchpixel(const uint8_t *p, uint32_t index, uint32_t x);
 	void drawFontPixel( uint8_t alpha, uint32_t x, uint32_t y );
