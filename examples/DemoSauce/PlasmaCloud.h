@@ -2,10 +2,14 @@
 #define PLASMA_CLOUD_H__
 
 #include <Arduino.h>
-#include "ILI9488_t3.h"
+#include <ILI9341_t3n.h>
 #include "MathUtil.h"
 #include "BaseAnimation.h"
 
+#define absT(x) ({ \
+  typeof(x) _x = (x); \
+  (_x > 0) ? _x : -_x; \
+})
 
 const float PLASMA_CLOUD_SPEED = 0.02;
 const uint_fast16_t PLASMA_CLOUD_MARGIN = 25;
@@ -23,10 +27,10 @@ class PlasmaCloud : public BaseAnimation {
 public:
 	PlasmaCloud() : BaseAnimation() {};
 
-	void init( ILI9488_t3 tft );
+	void init( ILI9341_t3n tft );
 	uint_fast16_t bgColor( void );
 	String title();
-	void perFrame( ILI9488_t3 tft, FrameParams frameParams );
+	void perFrame( ILI9341_t3n tft, FrameParams frameParams );
 
 private:
 	float _phase = 0;
@@ -35,7 +39,7 @@ private:
   uint_fast16_t _bgColor;
 };
 
-void PlasmaCloud::init( ILI9488_t3 tft ) {
+void PlasmaCloud::init( ILI9341_t3n tft ) {
 	_bgColor = tft.color565( 0x77, 0, 0xcc );
 
   float w = (float)tft.width();
@@ -64,7 +68,7 @@ String PlasmaCloud::title() {
 	return "PlasmaCloud";
 }
 
-void PlasmaCloud::perFrame( ILI9488_t3 tft, FrameParams frameParams ) {
+void PlasmaCloud::perFrame( ILI9341_t3n tft, FrameParams frameParams ) {
   uint_fast16_t w = (int_fast16_t)tft.width();
   uint_fast16_t h = (int_fast16_t)tft.height();
 
@@ -93,8 +97,8 @@ void PlasmaCloud::perFrame( ILI9488_t3 tft, FrameParams frameParams ) {
 
 	for( uint_fast16_t x=0; x<w; x+=PLASMA_CLOUD_LINE_WIDTH ) {
 		for( uint_fast16_t y=_ditherY; y<h; y+=PLASMA_CLOUD_STEP_Y ) {
-			PointU8 d0 = (PointU8){ abs(p0.x - x), abs(p0.y - y) };
-			PointU8 d1 = (PointU8){ abs(p1.x - x), abs(p1.y - y) };
+			PointU8 d0 = (PointU8){ absT(p0.x - x), absT(p0.y - y) };
+			PointU8 d1 = (PointU8){ absT(p1.x - x), absT(p1.y - y) };
 			//PointU8 d2 = (PointU8){ abs(p2.x - x), abs(p2.y - y) };
 
 			uint_fast8_t lookup0 = (d0.x*d0.x + d0.y*d0.y) >> sqrtBitShift;

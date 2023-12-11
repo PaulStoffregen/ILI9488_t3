@@ -45,6 +45,10 @@
 #include <ili9488_t3_font_ArialBold.h>
 #include <ILI9488_t3.h>
 
+#if !defined(ARDUINO_TEENSY41)
+#error "This Version only works with Teensy 4.1 with External memory"
+#endif
+
 #define TRY_EXTMEM
 #define UPDATE_HALF_FRAME
 

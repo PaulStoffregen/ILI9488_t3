@@ -8,6 +8,10 @@
 #include "SPI.h"
 #include "ILI9488_t3.h"
 
+#if defined(ARDUINO_TEENSY30)
+#error "This Version only works with Teensy 3.1 or greater"
+#endif
+
 // Converted to code with:
 // http://www.rinkydinkelectronics.com/t_imageconverter565.php
 //

@@ -12,6 +12,9 @@
 // This sketch depends on the fonts that are contained in the library
 //     https://github.com/mjs513/ILI9341_fonts
 //-------------------------------------------------------------------
+#if !defined(ARDUINO_TEENSY41)
+#error "This Version only works with Teensy 4.1 with External memory"
+#endif
 
 //#define TRY_EXTMEM
 #ifdef TRY_EXTMEM
